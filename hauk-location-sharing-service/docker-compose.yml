@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web:
+    image: php:7.4-apache
+    container_name: hauk_web
+    volumes:
+      - ./src/server:/var/www/html
+    ports:
+      - "80:80"
+    depends_on:
+      - redis
+      - memcached
+
+  redis:
+    image: redis:alpine
+    container_name: hauk_redis
+    ports:
+      - "6379:6379"
+
+  memcached:
+    image: memcached:alpine
+    container_name: hauk_memcached
+    ports:
+      - "11211:11211"
+
+networks:
+  default:
+    driver: bridge
